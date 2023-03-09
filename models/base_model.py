@@ -2,6 +2,7 @@
 """ The base model class """
 
 import json
+import models
 import datetime
 from uuid import uuid4
 
@@ -24,7 +25,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
-            storage.new()
+            models.storage.new(self)
 
     def __str__(self):
         """ prints a string representation of the basemodel object """
@@ -39,7 +40,7 @@ class BaseModel:
         """ saves with the current datetime """
 
         self.updated_at = datetime.datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """

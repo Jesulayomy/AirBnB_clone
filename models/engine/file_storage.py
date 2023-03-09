@@ -1,8 +1,14 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ Handles file storing capabilieties """
 
 import json
 from models.base_model import BaseModel
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from models.user import User
 
 
 class FileStorage:
@@ -10,7 +16,15 @@ class FileStorage:
 
     __file_path = "file.json"
     __objects = {}
-    """ __objects = {'Bm.69': <object basemodel> } """
+    md = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "Place": Place,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Review": Review
+            }
 
     def all(self):
         """ returns the dictionary __objects """
@@ -50,7 +64,9 @@ class FileStorage:
             dicts_dict = json.loads(string_rep)
             for key in dicts_dict.keys():
                 d = dicts_dict[key]
-                new = BaseModel(**d)
+                for md_key in self.md.keys():
+                    if md_key == key[:len(md_key)]:
+                        new = self.md[md_key](**d)
                 dicts_obj[key] = new
             FileStorage.__objects = dicts_obj
         except FileNotFoundError:
