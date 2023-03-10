@@ -2,17 +2,20 @@
 """ Handles file storing capabilieties """
 
 import json
-from models.base_model import BaseModel
-from models.state import State
-from models.city import City
 from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
 from models.place import Place
 from models.review import Review
+from models.state import State
 from models.user import User
 
 
 class FileStorage:
-    """ filestorage class """
+    """
+        FileStorage class that handles serialization and
+        deserialization to and from json files
+    """
 
     __file_path = "file.json"
     __objects = {}
@@ -27,17 +30,25 @@ class FileStorage:
             }
 
     def all(self):
-        """ returns the dictionary __objects """
+        """
+            Returns the dictionary __objects that contains objects keyed by
+            their classnames and id ("<ClassName.id>: <class '<classname>'>")
+        """
 
         return FileStorage.__objects
 
     def new(self, obj):
-        """ sets in __objects the obj with key <obj class name>.id """
+        """
+            sets in __objects the new obj
+            with key <obj class name>.id
+        """
 
         FileStorage.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
     def save(self):
-        """ serializes __objects to the JSON file (path: __file_path) """
+        """
+            Serializes __objects to the JSON file (path: __file_path)
+        """
 
         filename = FileStorage.__file_path
         objects_as_dicts = {}
@@ -52,7 +63,9 @@ class FileStorage:
             fl.write(string)
 
     def reload(self):
-        """ reloads a json representation """
+        """
+            Reloads a json representation from the __file_path
+        """
 
         filename = FileStorage.__file_path
 

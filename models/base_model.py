@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" The base model class """
+""" This script defines the BaseModel class """
 
 import json
 import models
@@ -8,14 +8,17 @@ from uuid import uuid4
 
 
 class BaseModel:
-    """ defines common attributes for the other classes """
+    """
+        BaseModel defines common attributes for the other classes.
+        Super class of (Amenity, City, Place, Review, State, User)
+    """
 
     def __init__(self, *args, **kwargs):
-        """ initializes the base model """
+        """ initializes the BaseModel """
 
         if kwargs is not None and len(kwargs) != 0:
             for key, value in kwargs.items():
-                if key[-6:] == "ted_at":
+                if key == "created_at" or key == "updated_at":
                     setattr(self, key, datetime.datetime.fromisoformat(value))
                 elif key == "__class__":
                     pass
@@ -28,7 +31,7 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
-        """ prints a string representation of the basemodel object """
+        """ Returns the string representation of the basemodel object """
 
         return "[{}] ({}) {}".format(
             self.__class__.__name__,
@@ -37,20 +40,20 @@ class BaseModel:
             )
 
     def save(self):
-        """ saves with the current datetime """
+        """ Saves updates to the object to the file with current datetime """
 
         self.updated_at = datetime.datetime.now()
         models.storage.save()
 
     def to_dict(self):
         """
-            returns a dictionary containing all
-            keys/values of __dict__ of the instance
+            Returns a dictionary containing all keys/values
+            of __dict__(all attributes) of the object
         """
 
         ret = {}
         for key, value in self.__dict__.items():
-            if key[-6:] == 'ted_at':
+            if isinstance(value, datetime.datetime):
                 ret[key] = datetime.datetime.isoformat(value)
             else:
                 ret[key] = value
