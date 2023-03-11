@@ -56,8 +56,16 @@ class HBNBCommand(cmd.Cmd):
         full_line = line.split(".")
         if len(full_line) == 1:
             print("*** Unknown syntax: {}".format(line))
+            return
         else:
-            if full_line[0] in self.md.keys():
+            cmd1 = full_line[1].split("(", 1)
+            if cmd1[0] not in cm.keys():
+                print("*** Unknown syntax: {}".format(line))
+                return
+            if full_line[0] not in self.md.keys():
+                print("** class doesn't exist **")
+                return
+            else:
                 do_what = full_line[1].split("(", 1)
                 try:
                     if line[len(full_line[0]) + 1 + len(do_what[0])] != "(":
@@ -75,8 +83,7 @@ class HBNBCommand(cmd.Cmd):
                     cm[do_what[0]](bracket_line)
                 else:
                     print("*** Unknown syntax: {}".format(line))
-            else:
-                print("*** Unknown syntax: {}".format(line))
+                    return
 
     def help_default(self):
         """ default help docstring """
@@ -108,44 +115,68 @@ class HBNBCommand(cmd.Cmd):
             or dictionary version Class.Update(id, {})
         """
 
+        # cls_name[0] = classname, cls_name[1] = rest of the line
         cls_name = line.split(" ", 1)
-        if cls_name[1] == '':
+        # instance check
+        if cls_name[1] == '' or cls_name[1][0] == '{':
             print("** instance id missing **")
             return
+        # set classname to cn
         cn = cls_name[0]
+        # is_dict[0] is the id enclosed in dQuotes
         is_dict = cls_name[1].split(",", 1)
-        try:
-            if is_dict[1][1] == "{":
-                dct = {}
-                str_rep = "{}".format(is_dict[1][1:])
-                try:
-                    dct = eval(str_rep)
-                except Exception:
-                    return
-                ky = f"{cls_name[0]}.{is_dict[0][1:-1]}"
-                for key in dct.keys():
-                    try:
-                        setattr(storage.all()[ky], key, dct[key])
-                        storage.all()[ky].save()
-                    except KeyError:
-                        pass
-            else:
-                args = cls_name[1].split(",", 2)
-                try:
-                    newl = cn + " " + args[0][1:-1] + " "
-                except IndexError:
-                    print("** instance id missing **")
-                try:
-                    if args[1][1] == '"' or args[1][1] == "'":
-                        newl = newl + args[1][2:-1]
-                    else:
-                        newl = newl + args[1][1:]
-                    newl = newl + args[2]
-                except IndexError:
-                    pass
-                self.do_update(newl)
-        except IndexError:
+        key1 = "{}.{}".format(cn, is_dict[0][1:-1])
+        if key1 in storage.all():
+            pass
+        else:
+            print("** no instance found **")
+            return
+        if len(is_dict) == 1:
             print("** attribute name missing **")
+            return
+
+        # is_dict[1] is the rest of the line after <"id",> or <"id"> if
+        # attr_name is missing is_dict[1] = " attr_name, 'value' ..."
+        str_rep = "{}".format(is_dict[1][1:])
+        try:
+            dct = eval(str_rep)
+        except Exception:
+            return
+        # cmmd is <class id>
+        cmmd = cn + " {}".format(is_dict[0][1:-1])
+        if type(dct) is dict:
+            for key in dct.keys():
+                try:
+                    setattr(storage.all()[key1], key, dct[key])
+                    storage.all()[key1].save()
+                except KeyError:
+                    pass
+            return
+        elif type(dct) is tuple:
+            i = 0
+            while i < 2:
+                cmmd += " "
+                if i == 1:
+                    cmmd += '"'
+                cmmd += dct[i]
+                i += 1
+            cmmd += '"'
+            newl = cmmd
+        elif type(dct) is str:
+            args = cls_name[1].split(",", 2)
+            try:
+                newl = cn + " " + args[0][1:-1] + " "
+            except IndexError:
+                print("** instance id missing **")
+            try:
+                if args[1][1] == '"' or args[1][1] == "'":
+                    newl = newl + args[1][2:-1]
+                else:
+                    newl = newl + args[1][1:]
+                newl = newl + args[2]
+            except IndexError:
+                pass
+        self.do_update(newl)
 
     def help_call_update(self):
         """ helper docstring for class_update """
@@ -273,17 +304,22 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """ updates an instance based on its classname and id """
 
-        args = line.split(" ", 3)
-
-        if args == []:
+        if not line:
             print("** class name missing **")
             return
-        elif args[0] in self.md.keys():
+
+        args = line.split(" ", 3)
+
+        if args[0] in self.md.keys():
             if len(args) == 1:
                 print("** instance id missing **")
                 return
             elif len(args) == 2:
-                print("** attribute name missing **")
+                key = '{}.{}'.format(args[0], args[1])
+                if key in storage.all().keys():
+                    print("** attribute name missing **")
+                else:
+                    print("** no instance found **")
                 return
             elif len(args) == 3:
                 print("** value missing **")
@@ -296,7 +332,6 @@ class HBNBCommand(cmd.Cmd):
                 if key in storage.all().keys():
                     args_valu = args[3].split(' ')
                     valu = []
-
                     if args_valu[0][0] == '"' and args_valu[0][-1] == '"':
                         args_res = args_valu[0][1:-1]
                         valu.append(args_res)
