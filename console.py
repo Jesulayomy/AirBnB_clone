@@ -130,10 +130,16 @@ class HBNBCommand(cmd.Cmd):
                     except KeyError:
                         pass
             else:
-                args = cls_name[1].split(",")
-                newl = cn + " " + args[0][1:-1] + " "
+                args = cls_name[1].split(",", 2)
                 try:
-                    newl = newl + args[1][2:-1]
+                    newl = cn + " " + args[0][1:-1] + " "
+                except IndexError:
+                    print("** instance id missing **")
+                try:
+                    if args[1][1] == '"' or args[1][1] == "'":
+                        newl = newl + args[1][2:-1]
+                    else:
+                        newl = newl + args[1][1:]
                     newl = newl + args[2]
                 except IndexError:
                     pass
@@ -267,7 +273,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """ updates an instance based on its classname and id """
 
-        args = line.split()
+        args = line.split(" ", 3)
 
         if args == []:
             print("** class name missing **")
@@ -283,21 +289,30 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
                 return
             else:
+                clas_name = args[0]
+                clas_id = args[1]
                 attr_name = args[2]
                 key = '{}.{}'.format(args[0], args[1])
                 if key in storage.all().keys():
+                    args_valu = args[3].split(' ')
                     valu = []
-                    valu.append(args[3])
-                    if valu[0][0] == '"' and valu[0][-1] != '"':
-                        i = 4
-                        while i < len(args):
-                            valu.append(args[i])
-                            try:
-                                if valu[i][-1] == '"':
-                                    break
-                            except IndexError:
-                                pass
+
+                    if args_valu[0][0] == '"' and args_valu[0][-1] == '"':
+                        args_res = args_valu[0][1:-1]
+                        valu.append(args_res)
+                    elif args_valu[0][0] == '"' and args_valu[0][-1] != '"':
+                        valu.append(args_valu[0])
+                        i = 1
+                        while i < len(args_valu):
+                            valu.append(args_valu[i])
+                            if args_valu[i][-1] == '"':
+                                break
                             i += 1
+                        valu[0] = valu[0][1:]
+                        valu[i] = valu[i][:-1]
+                    elif args_valu[0][0] != '"':
+                        valu.append(args_valu[0])
+
                     valu = " ".join(valu)
                 else:
                     print("** no instance found **")
@@ -308,8 +323,11 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     value = float(valu)
                 except ValueError:
-                    if valu[0] == '"' and valu[-1] == '"':
-                        valu = valu[1:-1]
+                    try:
+                        if valu[0] == '"' and valu[-1] == '"':
+                            valu = valu[1:-1]
+                    except IndexError:
+                        pass
                     value = valu
             setattr(storage.all()[key], attr_name, value)
             storage.all()[key].save()
