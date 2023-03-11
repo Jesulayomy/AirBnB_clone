@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
                 for key in dct.keys():
                     try:
                         setattr(storage.all()[ky], key, dct[key])
-                        storage.save()
+                        storage.all()[ky].save()
                     except KeyError:
                         pass
             else:
