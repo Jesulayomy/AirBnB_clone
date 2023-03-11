@@ -44,3 +44,52 @@ You will always use class attributes for any object. Why not instance attributes
 <li>Provide easy class description: everybody will be able to see quickly what a model should contain (which attributes, etc…)</li>
 <li>Provide default value of any attribute</li>
 <li>In the future, provide the same model behavior for file storage or database storage</li></ul>
+
+<h3> *args, **kwargs </h3>
+How to use them
+How do you pass arguments to a function?
+
+def my_fct(param_1, param_2):
+    ...
+
+my_fct("Best", "School")
+But with this function definition, you must call my_fct with 2 parameters, no more, no less.
+
+Can it be dynamic? Yes you can:
+
+def my_fct(*args, **kwargs):
+    ...
+
+my_fct("Best", "School")  <hr>
+What? What’s *args and **kwargs?
+
+*args is a Tuple that contains all arguments
+*kwargs is a dictionary that contains all arguments by key/value
+A dictionary? But why?
+
+So, to make it clear, *args is the list of anonymous arguments, no name, just an order. **kwargs is the dictionary with all named arguments.
+
+Examples:
+
+def my_fct(*args, **kwargs):
+    print("{} - {}".format(args, kwargs))
+
+my_fct() # () - {}
+my_fct("Best") # ('Best',) - {}
+my_fct("Best", 89) # ('Best', 89) - {}
+my_fct(name="Best") # () - {'name': 'Best'}
+my_fct(name="Best", number=89) # () - {'name': 'Best', 'number': 89}
+my_fct("School", 12, name="Best", number=89) # ('School', 12) - {'name': 'Best', 'number': 89}
+Perfect? Of course you can mix both, but the order should be first all anonymous arguments, and after named arguments.
+
+Last example:
+
+def my_fct(*args, **kwargs):
+    print("{} - {}".format(args, kwargs))
+
+a_dict = { 'name': "Best", 'age': 89 }
+
+my_fct(a_dict) # ({'age': 89, 'name': 'Best'},) - {}
+my_fct(*a_dict) # ('age', 'name') - {}
+my_fct(**a_dict) # () - {'age': 89, 'name': 'Best'}
+You can play with these 2 arguments to clearly understand where and how your variables are stored.
