@@ -17,7 +17,7 @@ The console will be a tool to validate this storage engine. </p>
 --> MySQL storage
 <p> <ul>
 <li>replace the file storage by a Database storage</li>
-<li>map your models to a table in database by using an O.R.M.</li><ul>
+<li>map your models to a table in database by using an O.R.M.</li></ul>
 
 --> Web framework - template
 <p> <ul>
