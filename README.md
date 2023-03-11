@@ -34,4 +34,4 @@ The console will be a tool to validate this storage engine. </p>
 <li> learn JQuery </li>
 <li> load objects from the client side by using your own RESTful API </li></ul>
 
-<h2 text-align= "center">STORAGE</h2>
+<h2 style="text-align: center;">STORAGE</h2>
