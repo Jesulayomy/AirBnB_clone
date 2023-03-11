@@ -34,4 +34,13 @@ The console will be a tool to validate this storage engine. </p>
 <li> learn JQuery </li>
 <li> load objects from the client side by using your own RESTful API </li></ul>
 
-<h2 style="text-align: center;">STORAGE</h2>
+<h2 style="text-align: centre;">STORAGE</h2>
+<p> Persistency is really important for a web application. It means: every time your program is executed, it starts with all objects previously created from another execution. Without persistency, all the work done in a previous execution won’t be saved and will be gone.
+In this project, you will manipulate 2 types of storage: file and database. For the moment, you will focus on file.
+Why separate “storage management” from “model”? It’s to make your models modular and independent. With this architecture, you can easily replace your storage system without re-coding everything everywhere.
+
+You will always use class attributes for any object. Why not instance attributes? For 3 reasons:
+<ul>
+<li>Provide easy class description: everybody will be able to see quickly what a model should contain (which attributes, etc…)</li>
+<li>Provide default value of any attribute</li>
+<li>In the future, provide the same model behavior for file storage or database storage</li></ul>
