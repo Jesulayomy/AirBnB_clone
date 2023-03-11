@@ -7,4 +7,4 @@ from models.base_model import BaseModel
 class Amenity(BaseModel):
     """ city subclass of BaseModel """
 
-        name = ""
+    name = ""
