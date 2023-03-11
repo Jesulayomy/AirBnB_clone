@@ -13,3 +13,24 @@ The console will be a tool to validate this storage engine. </p>
 <li>learn HTML/CSS</li>
 <li>create the HTML of your application</li>
 <li>craete template of each project</li></ul>
+
+--> MySQL storage
+<p> <ul>
+<li>replace the file storage by a Database storage</li>
+<li>map your models to a table in database by using an O.R.M.</li><ul>
+
+--> Web framework - template
+<p> <ul>
+<li> create your first web server in Python </li>
+<li> make your static HTML file dynamic by using objects stored in a file or database </li></ul>
+
+--> RESTful API
+<p> <ul>
+<li> expose all your objects stored via a JSON web interface </li>
+<li> manipulate your objects via a RESTful API </li></ul>
+
+--> Web dynamic
+<p> <ul>
+<li> learn JQuery </li>
+<li> load objects from the client side by using your own RESTful API </li></ul>
+
