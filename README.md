@@ -49,22 +49,23 @@ You will always use class attributes for any object. Why not instance attributes
 How to use them <br>
 How do you pass arguments to a function?
 
-def my_fct(param_1, param_2):
+<b>def my_fct(param_1, param_2):
     ...
 
-my_fct("Best", "School")
+my_fct("Best", "School")</b> <br>
 But with this function definition, you must call my_fct with 2 parameters, no more, no less.
 
 Can it be dynamic? Yes you can:
 
-def my_fct(*args, **kwargs):
+<b>def my_fct(*args, **kwargs):
     ...
 
-my_fct("Best", "School")  <hr>
+my_fct("Best", "School") </b> <hr>
 <p> What? What’s *args and **kwargs?</p>
 
-*args is a Tuple that contains all arguments <br>
-*kwargs is a dictionary that contains all arguments by key/value
+<ul>
+<li>*args is a Tuple that contains all arguments </li><br>
+<li>*kwargs is a dictionary that contains all arguments by key/value</li> </ul>
 <p> A dictionary? But why?</p>
 
 So, to make it clear, 
@@ -74,7 +75,7 @@ So, to make it clear,
 
 Examples:
 
-def my_fct(*args, **kwargs):
+<b>def my_fct(*args, **kwargs):<br>
     print("{} - {}".format(args, kwargs))
 
 my_fct() # () - {} <br>
@@ -82,17 +83,17 @@ my_fct("Best") # ('Best',) - {}<br>
 my_fct("Best", 89) # ('Best', 89) - {} <br>
 my_fct(name="Best") # () - {'name': 'Best'}<br>
 my_fct(name="Best", number=89) # () - {'name': 'Best', 'number': 89}<br>
-my_fct("School", 12, name="Best", number=89) # ('School', 12) - {'name': 'Best', 'number': 89} <br> <hr>
+my_fct("School", 12, name="Best", number=89) # ('School', 12) - {'name': 'Best', 'number': 89}</b> <br> <hr>
 Perfect? Of course you can mix both, but the order should be first all anonymous arguments, and after named arguments.
 
 Last example:
 
-def my_fct(*args, **kwargs):
+<b>def my_fct(*args, **kwargs):<br>
     print("{} - {}".format(args, kwargs))
 
 a_dict = { 'name': "Best", 'age': 89 } <br>
 
 my_fct(a_dict) # ({'age': 89, 'name': 'Best'},) - {}<br>
 my_fct(*a_dict) # ('age', 'name') - {}<br>
-my_fct(**a_dict) # () - {'age': 89, 'name': 'Best'}<br>
+my_fct(**a_dict) # () - {'age': 89, 'name': 'Best'}</b><br>
 You can play with these 2 arguments to clearly understand where and how your variables are stored.<hr>
