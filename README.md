@@ -64,7 +64,7 @@ my_fct("Best", "School") </b> <hr>
 <p> What? What’s *args and **kwargs?</p>
 
 <ul>
-<li>*args is a Tuple that contains all arguments </li><br>
+<li>*args is a Tuple that contains all arguments </li>
 <li>*kwargs is a dictionary that contains all arguments by key/value</li> </ul>
 <p> A dictionary? But why?</p>
 
@@ -96,4 +96,34 @@ a_dict = { 'name': "Best", 'age': 89 } <br>
 my_fct(a_dict) # ({'age': 89, 'name': 'Best'},) - {}<br>
 my_fct(*a_dict) # ('age', 'name') - {}<br>
 my_fct(**a_dict) # () - {'age': 89, 'name': 'Best'}</b><br>
-You can play with these 2 arguments to clearly understand where and how your variables are stored.<hr>
+You can play with these 2 arguments to clearly understand where and how your variables are stored.<hr><br>
+
+
+<h2> DATETIME </h2>
+datetime is a Python module to manipulate date, time etc…<br>
+In this example, you create an instance of datetime with the current date and time:<br>
+
+<b>from datetime import datetime<br>
+
+date_now = datetime.now()<br>
+print(type(date_now)) # <class 'datetime.datetime'><br>
+print(date_now) # 2017-06-08 20:42:42.170922<br></b>
+
+date_now is an object, so you can manipulate it:<br>
+
+<b>from datetime import timedelta<br>
+
+date_tomorrow = date_now + timedelta(days=1)<br>
+print(date_tomorrow) # 2017-06-09 20:42:42.170922<br></b>
+… you can also store it:
+
+<b>a_dict = { 'my_date': date_now }<br>
+print(type(a_dict['my_date'])) # <class 'datetime.datetime'> <br>
+print(a_dict) # {'my_date': datetime.datetime(2017, 6, 8, 20, 42, 42, 170922)}<br></b>
+What? What’s this format when a datetime instance is in a datastructure??? It’s unreadable.<br>
+
+How to make it readable: strftime <br>
+
+<b>print(date_now.strftime("%A")) # Thursday <br>
+print(date_now.strftime("%A %d %B %Y at %H:%M:%S")) # Thursday 08 June 2017 at 20:42:42</b><br><hr>
+
