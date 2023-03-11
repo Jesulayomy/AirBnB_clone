@@ -77,12 +77,12 @@ Examples:
 def my_fct(*args, **kwargs):
     print("{} - {}".format(args, kwargs))
 
-my_fct() # () - {}
-my_fct("Best") # ('Best',) - {}
-my_fct("Best", 89) # ('Best', 89) - {}
-my_fct(name="Best") # () - {'name': 'Best'}
-my_fct(name="Best", number=89) # () - {'name': 'Best', 'number': 89}
-my_fct("School", 12, name="Best", number=89) # ('School', 12) - {'name': 'Best', 'number': 89} <br>
+my_fct() # () - {} <br>
+my_fct("Best") # ('Best',) - {}<br>
+my_fct("Best", 89) # ('Best', 89) - {} <br>
+my_fct(name="Best") # () - {'name': 'Best'}<br>
+my_fct(name="Best", number=89) # () - {'name': 'Best', 'number': 89}<br>
+my_fct("School", 12, name="Best", number=89) # ('School', 12) - {'name': 'Best', 'number': 89} <br> <hr>
 Perfect? Of course you can mix both, but the order should be first all anonymous arguments, and after named arguments.
 
 Last example:
@@ -90,9 +90,9 @@ Last example:
 def my_fct(*args, **kwargs):
     print("{} - {}".format(args, kwargs))
 
-a_dict = { 'name': "Best", 'age': 89 }
+a_dict = { 'name': "Best", 'age': 89 } <br>
 
-my_fct(a_dict) # ({'age': 89, 'name': 'Best'},) - {}
-my_fct(*a_dict) # ('age', 'name') - {}
-my_fct(**a_dict) # () - {'age': 89, 'name': 'Best'}
-You can play with these 2 arguments to clearly understand where and how your variables are stored.
+my_fct(a_dict) # ({'age': 89, 'name': 'Best'},) - {}<br>
+my_fct(*a_dict) # ('age', 'name') - {}<br>
+my_fct(**a_dict) # () - {'age': 89, 'name': 'Best'}<br>
+You can play with these 2 arguments to clearly understand where and how your variables are stored.<hr>
