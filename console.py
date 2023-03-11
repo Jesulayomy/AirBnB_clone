@@ -208,12 +208,15 @@ class HBNBCommand(cmd.Cmd):
 
         if args == []:
             print("** class name missing **")
-        elif args[0] in self.md.keys():
+            return
+        if args[0] in self.md.keys():
             new = self.md[args[0]]()
             new.save()
             print(new.id)
+            return
         else:
             print("** class doesn't exist **")
+            return
 
     def help_create(self):
         """ Help docstring for create command """
@@ -228,7 +231,8 @@ class HBNBCommand(cmd.Cmd):
 
         if args == []:
             print("** class name missing **")
-        elif args[0] in self.md.keys():
+            return
+        if args[0] in self.md.keys():
             if len(args) == 1:
                 print("** instance id missing **")
             else:
@@ -255,7 +259,7 @@ class HBNBCommand(cmd.Cmd):
 
         if args == []:
             print("** class name missing **")
-        elif args[0] in self.md.keys():
+        if args[0] in self.md.keys():
             if len(args) == 1:
                 print("** instance id missing **")
             else:
@@ -267,8 +271,10 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                 else:
                     print("** no instance found **")
+                    return
         else:
             print("** class doesn't exist **")
+            return
 
     def help_destroy(self):
         """ dicstring for destroy command """
@@ -293,6 +299,7 @@ class HBNBCommand(cmd.Cmd):
                     print(storage.all()[key])
         else:
             print("** class doesn't exist **")
+            return
 
     def help_all(self):
         """ docstring for all help """
