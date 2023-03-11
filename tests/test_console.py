@@ -127,8 +127,8 @@ class ConsoleTest(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("show State {}".format(self.state_id))
             value = f.getvalue()[:-1]
-            
             # find the new object created in storage
+
             all_objs = storage.all()
             key = "State.{}".format(self.state_id)
             obj = all_objs[key]
@@ -351,7 +351,7 @@ class ConsoleTest(unittest.TestCase):
 
     def test_all2(self):
         """ test all for a model that has no object """
-        
+
         # check if a model exist and destroy it
         destroy = False
         with patch("sys.stdout", new=StringIO()) as f:
@@ -363,7 +363,8 @@ class ConsoleTest(unittest.TestCase):
 
         if destroy:
             with patch("sys.stdout", new=StringIO()) as f:
-                HBNBCommand().onecmd("destroy Review {}".format(self.review_id))
+                HBNBCommand().onecmd("destroy Review {}".format(
+                    self.review_id))
                 value = f.getvalue()[:-1]
 
         # test all when model doesnt exist
