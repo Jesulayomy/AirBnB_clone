@@ -62,6 +62,14 @@ class ConsoleTest(unittest.TestCase):
             HBNBCommand().onecmd("create Review")
             cls.review_id = f.getvalue()[:-1]
 
+    def testquit(self):
+        """ tests the quit command """
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("quit")
+            value = f.getvalue()
+            self.assertEqual(value, "")
+
     def test_create(self):
         """ test the create command """
 
@@ -216,6 +224,185 @@ class ConsoleTest(unittest.TestCase):
             value = f.getvalue()[:-1]
             self.assertEqual(value, "** class name missing **")
 
+    def test_show_class_call(self):
+        """ test Class.show() instance """
+
+        objs = self.s_test._FileStorage__objects.copy()
+        for key in objs.keys():
+            del self.s_test._FileStorage__objects[key]
+
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            pass
+
+        ConsoleTest.setUpClass()
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("Amenity.show(\"{}\")".format(
+                self.amenity_id))
+            value = f.getvalue()[:-1]
+            all_objs = storage.all()
+            key = "Amenity.{}".format(self.amenity_id)
+            obj = all_objs[key]
+            self.assertEqual(value, obj.__str__())
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("BaseModel.show(\"{}\")".format(
+                self.base_id))
+            value = f.getvalue()[:-1]
+            all_objs = storage.all()
+            key = "BaseModel.{}".format(self.base_id)
+            obj = all_objs[key]
+            self.assertEqual(value, obj.__str__())
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("City.show(\"{}\")".format(
+                self.city_id))
+            value = f.getvalue()[:-1]
+            all_objs = storage.all()
+            key = "City.{}".format(self.city_id)
+            obj = all_objs[key]
+            self.assertEqual(value, obj.__str__())
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("Place.show(\"{}\")".format(
+                self.place_id))
+            value = f.getvalue()[:-1]
+            all_objs = storage.all()
+            key = "Place.{}".format(self.place_id)
+            obj = all_objs[key]
+            self.assertEqual(value, obj.__str__())
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("Review.show(\"{}\")".format(
+                self.review_id))
+            value = f.getvalue()[:-1]
+            all_objs = storage.all()
+            key = "Review.{}".format(self.review_id)
+            obj = all_objs[key]
+            self.assertEqual(value, obj.__str__())
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("State.show(\"{}\")".format(
+                self.state_id))
+            value = f.getvalue()[:-1]
+            all_objs = storage.all()
+            key = "State.{}".format(self.state_id)
+            obj = all_objs[key]
+            self.assertEqual(value, obj.__str__())
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("User.show(\"{}\")".format(
+                self.user_id))
+            value = f.getvalue()[:-1]
+            all_objs = storage.all()
+            key = "User.{}".format(self.user_id)
+            obj = all_objs[key]
+            self.assertEqual(value, obj.__str__())
+
+    def test_destroy_class_call(self):
+        """ test Class.show() instance """
+
+        objs = self.s_test._FileStorage__objects.copy()
+        for key in objs.keys():
+            del self.s_test._FileStorage__objects[key]
+
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            pass
+
+        ConsoleTest.setUpClass()
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("Amenity.destroy(\"{}\")".format(
+                self.amenity_id))
+            value = f.getvalue()
+            self.assertEqual(value, "")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("BaseModel.destroy(\"{}\")".format(
+                self.base_id))
+            value = f.getvalue()
+            self.assertEqual(value, "")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("City.destroy(\"{}\")".format(
+                self.city_id))
+            value = f.getvalue()
+            self.assertEqual(value, "")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("Place.destroy(\"{}\")".format(
+                self.place_id))
+            value = f.getvalue()
+            self.assertEqual(value, "")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("Review.destroy(\"{}\")".format(
+                self.review_id))
+            value = f.getvalue()
+            self.assertEqual(value, "")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("State.destroy(\"{}\")".format(
+                self.state_id))
+            value = f.getvalue()
+            self.assertEqual(value, "")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("User.destroy(\"{}\")".format(
+                self.user_id))
+            value = f.getvalue()
+            self.assertEqual(value, "")
+
+    def test_count_class_call(self):
+        """ test Class.show() instance """
+
+        objs = self.s_test._FileStorage__objects.copy()
+        for key in objs.keys():
+            del self.s_test._FileStorage__objects[key]
+
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            pass
+
+        ConsoleTest.setUpClass()
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("Amenity.count()")
+            value = f.getvalue()[:-1]
+            self.assertEqual(value, "1")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("BaseModel.count()")
+            value = f.getvalue()[:-1]
+            self.assertEqual(value, "1")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("City.count()")
+            value = f.getvalue()[:-1]
+            self.assertEqual(value, "1")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("Place.count()")
+            value = f.getvalue()[:-1]
+            self.assertEqual(value, "1")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("Review.count()")
+            value = f.getvalue()[:-1]
+            self.assertEqual(value, "1")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("State.count()")
+            value = f.getvalue()[:-1]
+            self.assertEqual(value, "1")
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            HBNBCommand().onecmd("User.count()")
+            value = f.getvalue()[:-1]
+            self.assertEqual(value, "1")
+
     def test_destroy(self):
         """ test destroy command """
 
@@ -332,26 +519,30 @@ class ConsoleTest(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("all BaseModel ")
             value = f.getvalue()[:-1]
-            # value will be string that print an array of objects
+            # value will be string that print a string of objects
             # create an expected value to check against value
             all_objs = storage.all()
             exp_val = ""
             for key in all_objs.keys():
                 if all_objs[key].__class__.__name__ == "BaseModel":
                     exp_val += all_objs[key].__str__()
+                    exp_val += '\n'
 
-            self.assertEqual(value, exp_val)
+            self.assertEqual(value, exp_val[:-1])
 
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("all User ")
             value = f.getvalue()[:-1]
-            # value will be string that print an array of objects
+            # value will be string that print a string of objects
             # create an expected value to check against value
             all_objs = storage.all()
-            exp_val = []
+            exp_val = ""
             for key, obj in all_objs.items():
                 if obj.__class__.__name__ == "User":
-                    exp_val.append(all_objs[key].__str__())
+                    exp_val += all_objs[key].__str__()
+                    exp_val += '\n'
+
+            self.assertEqual(value, exp_val[:-1])
 
     def test_all2(self):
         """ test all for a model that has no object """
