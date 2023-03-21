@@ -1,0 +1,25 @@
+header {
+    height: 70px;
+    width: 100%;
+    background-image: url("../images/logo.png");
+    background-repeat: no-repeat;
+    background-position: 20px center;
+}
+
+@media screen and (max-width:800px) {
+    header {
+        height: 60px;
+        background-position: 10px center;
+        background-size: 30%;
+    }
+    
+}
+
+@media screen and (max-width:400px) {
+    header {
+        height: 30px;
+        background-position: 5px center;
+        background-size: 30%;
+    }
+
+}

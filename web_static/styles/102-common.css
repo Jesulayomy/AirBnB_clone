@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: #484848;
+    font-size: 14px;
+    margin-bottom: 60px;
+    font-family: Circular, "Helvetica Neue", Helvetica,Arial, sans-serif;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+@media screen and (max-width:800px) {
+    body {
+        font-size: 12px;
+    }
+
+    .container {
+        max-width: 95%;
+        margin: 10px 10px;
+        padding: 0px 3%;
+    }
+
+}
+
+@media screen and (max-width:400px) {
+    body {
+        font-size: 8px;
+    }
+
+    .container {
+        max-width: 95%px;
+        margin: 5px 5px;
+        padding: 0px 1%;
+    }
+
+}
