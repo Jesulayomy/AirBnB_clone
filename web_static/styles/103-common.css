@@ -41,3 +41,10 @@ body {
     }
 
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: rgb(20, 20, 20);
+        color: #9c9a9a;
+    }
+}

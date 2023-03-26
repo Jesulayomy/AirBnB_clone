@@ -41,6 +41,14 @@ ul {
     position: relative;
 }
 
+.search {
+    height: 100%;
+    width: 26%;
+    position: relative;
+    background-color: transparent;
+    border: 0px;
+}
+
 .locations h3, .amenities h3 {
     font-weight: 600;
     margin-bottom: 0;
@@ -69,6 +77,7 @@ ul {
     left: 0;
     position: absolute;
     padding-bottom: 5%;
+    z-index: 1;
 }
 
 .popover h2 {
@@ -149,6 +158,21 @@ ul {
 
     .popover li {
         font-size: 6px;
+    }
+
+}
+
+@media (prefers-color-scheme: dark) {
+    .filters, .popover {
+        background-color: rgb(20, 20, 20);
+    }
+
+    button {
+        background-color: #7e2b2e;
+    }
+
+    button, .search {
+        color: #949494;
     }
 
 }
